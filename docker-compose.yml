@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16  
+    container_name: jobs_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-jobs_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-jobs_password}
+      POSTGRES_DB: ${DB_NAME:-jobs_db}
+      # Additional optimizations
+      POSTGRES_CONFIG: |
+        max_connections = 200
+        shared_buffers = 256MB
+        effective_cache_size = 768MB
+        maintenance_work_mem = 64MB
+        checkpoint_completion_target = 0.9
+        wal_buffers = 16MB
+        default_statistics_target = 100
+        random_page_cost = 1.1
+        effective_io_concurrency = 200
+        work_mem = 8MB
+        min_wal_size = 1GB
+        max_wal_size = 4GB
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-jobs_user} -d ${DB_NAME:-jobs_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - etl_network
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+
+networks:
+  etl_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

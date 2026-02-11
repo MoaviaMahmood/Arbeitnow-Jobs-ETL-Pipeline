@@ -1,0 +1,11 @@
+requests
+json
+datetime
+os
+csv
+re
+html
+pytest
+psycopg[binary]==3.2.3  # PostgreSQL 17 compatible
+requests==2.32.3
+python-dotenv==1.0.1
