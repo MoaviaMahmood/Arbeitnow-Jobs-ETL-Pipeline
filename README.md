@@ -1,4 +1,4 @@
-# Jobs ETL Pipeline (Bronze → Silver → PostgreSQL)
+# Arbeitnow Jobs ETL Pipeline (Bronze → Silver → PostgreSQL)
 
 An end-to-end **ETL pipeline** that extracts job postings from the Arbeitnow Job Board API, cleans and transforms the data, and loads it into a PostgreSQL database using modern PostgreSQL features (MERGE, generated columns, partial indexes).
 
@@ -9,7 +9,66 @@ An end-to-end **ETL pipeline** that extracts job postings from the Arbeitnow Job
 This project implements a layered data architecture:
 
 ```
-API → Bronze (Raw JSON) → Silver (Clean CSV) → PostgreSQL (Analytics-Ready)
+Arbeitnow Jobs API
+    │
+    │  (HTTP GET Request)
+    │  - Pagination handling
+    │  - Error handling & status checks
+    │
+    ▼
+Bronze Layer – Raw Data (JSON)
+    │
+    │  File: data/bronze_jobs.json
+    │  - Raw API response
+    │  - No transformations
+    │  - Preserves original schema
+    │  - Stored for reproducibility & auditing
+    │
+    ▼
+Silver Layer – Cleaned Data (CSV)
+    │
+    │  File: data/silver_jobs.csv
+    │
+    │  Transformations:
+    │  - Slug parsing → extract job_id
+    │  - Title normalization
+    │  - Location splitting (city, region, country)
+    │  - Remote field normalization (0/1)
+    │  - HTML tag removal
+    │  - Encoding fixes (UTF-8 / Latin1 / CP1252)
+    │  - HTML entity decoding
+    │  - Remove Arbeitnow footer
+    │  - Timestamp parsing (UNIX → date)
+    │  - Whitespace normalization
+    │
+    ▼
+PostgreSQL – Analytics Ready Layer
+    │
+    │  Table: jobs_silver
+    │
+    │  Load Strategy:
+    │  - MERGE (Upsert logic)
+    │      • MATCH → UPDATE
+    │      • NOT MATCH → INSERT
+    │
+    │  Schema Features:
+    │  - job_id (Primary Key)
+    │  - description_length (Generated column)
+    │  - created_date (DATE)
+    │  - loaded_at (ETL timestamp)
+    │
+    │  Performance Optimization:
+    │  - B-tree indexes
+    │  - Partial index (recent jobs)
+    │  - Indexed remote flag
+    │
+    ▼
+Analytics & BI / SQL Queries
+    - Remote job analysis
+    - Hiring trend analysis
+    - Company job volume
+    - Time-based aggregations
+
 ```
 
 
@@ -230,3 +289,5 @@ ORDER BY total_jobs DESC;
 - Add unit tests
 - Add CI/CD pipeline
 - Add data validation (Great Expectations)
+
+
