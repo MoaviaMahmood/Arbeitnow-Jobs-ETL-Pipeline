@@ -150,11 +150,13 @@ senior-data-engineer-12345
 
 Converts multiple formats into binary:
 ```bash
-Input	|   Output
-true	|   1
-false	|   0
-yes	    |   1
-no	    |   0
+| Input  | Output |
+|--------|--------|
+| true   | 1      |
+| false  | 0      |
+| yes    | 1      |
+| no     | 0      |
+
 ```
 
 ## Created Date
@@ -169,19 +171,19 @@ Converts UNIX timestamp into:
 
 Table: jobs_silver
 ```bash
----------------------------------------------------------------------
-|    Column	            |    Type	      |  Description
-|    job_id	            |    TEXT (PK)	  |  Extracted from slug
-|    title	            |    TEXT	      |  Cleaned job title
-|    description	    |    TEXT	      |  Cleaned job description
-|    description_length	|    INT	      |  Generated column
-|    remote	            |    INT	      |  0/1 flag
-|    city	            |    TEXT	      |  Extracted location
-|    region	            |    TEXT	      |  Extracted location
-|    country	        |    TEXT	      |  Extracted location
-|    created_date	    |    DATE	      |  Parsed from timestamp
-|    loaded_at	        |    TIMESTAMP	  |  ETL load time
----------------------------------------------------------------------
+| Column              | Type           | Description               |
+|---------------------|----------------|---------------------------|
+| job_id              | TEXT (PK)      | Extracted from slug       |
+| title               | TEXT           | Cleaned job title         |
+| description         | TEXT           | Cleaned job description   |
+| description_length  | INT            | Generated column          |
+| remote              | INT            | 0/1 flag                  |
+| city                | TEXT           | Extracted location        |
+| region              | TEXT           | Extracted location        |
+| country             | TEXT           | Extracted location        |
+| created_date        | DATE           | Parsed from timestamp     |
+| loaded_at           | TIMESTAMP      | ETL load time             |
+
 ```
 
 ### Indexes
