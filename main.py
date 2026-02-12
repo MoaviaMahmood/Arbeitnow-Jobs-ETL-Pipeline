@@ -50,7 +50,7 @@ load_csv_to_postgres(
     pg_username="postgres",
     pg_password="mavi123",  
     pg_host="localhost",
-    pg_port="5433",
+    pg_port="5432",
     pg_db="jobs_db"
 )
 

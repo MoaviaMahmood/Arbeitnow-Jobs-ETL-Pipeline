@@ -46,11 +46,6 @@ PostgreSQL – Analytics Ready Layer
     │
     │  Table: jobs_silver
     │
-    │  Load Strategy:
-    │  - MERGE (Upsert logic)
-    │      • MATCH → UPDATE
-    │      • NOT MATCH → INSERT
-    │
     │  Schema Features:
     │  - job_id (Primary Key)
     │  - description_length (Generated column)
@@ -70,7 +65,23 @@ Analytics & BI / SQL Queries
     - Time-based aggregations
 
 ```
+## Dashboard Preview
 
+### Jobs by Company
+<img width="1482" height="834" alt="Image" src="https://github.com/user-attachments/assets/c027807c-320e-4654-8ee8-93f0b7e8290c" />
+
+### Jobs by City
+<img width="1485" height="833" alt="Image" src="https://github.com/user-attachments/assets/29fbca01-9b76-4d12-8f29-286d556184ce" />
+
+### Seniority Distribution
+<img width="1488" height="834" alt="Image" src="https://github.com/user-attachments/assets/38eda240-0d7c-48e8-9d71-57c59ddbb87d" />
+
+
+## Insights
+
+- 73% of jobs are on-site
+- Hamburg and Munich have the highest concentration
+- Senior roles dominate the dataset
 
 ### Layers
 
