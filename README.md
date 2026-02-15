@@ -134,16 +134,25 @@ Analytics & BI / SQL Queries
 ├── etl/
 │ ├── extract.py
 │ ├── transform.py
-│ ├── load.py
+│ └── load.py
 │
 ├── data/
 │ ├── bronze_jobs.json
 │ └── silver_jobs.csv
-│
+|
+├── images/
+│ ├── Jobs by city.png
+│ ├── Jobs by company.png
+| └── Jobs by role.png
+|
+├── tests/
+│ ├── tests_all_connections.py
+│ └── test_transform.py
+|
 ├── docker-compose.yml
 ├── main.py
-├── test_connection.py
-├── init-db.sql
+├── jobs.pbix
+├── requirements.txt
 └── README.md
 ```
 
