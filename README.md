@@ -166,16 +166,6 @@ Analytics & BI / SQL Queries
 git clone "https://github.com/MoaviaMahmood/Jobs_etl"
 cd jobs-etl
 ```
-## Create .env File
-
-### Create a .env file in the root directory:
-```bash
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=jobs_db
-DB_USER=jobs_user
-DB_PASSWORD=jobs_password
-```
 
 ## Start PostgreSQL with Docker
 ```bash
