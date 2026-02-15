@@ -153,6 +153,7 @@ Analytics & BI / SQL Queries
 ├── main.py
 ├── jobs.pbix
 ├── requirements.txt
+├── .env
 └── README.md
 ```
 
