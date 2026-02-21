@@ -8,7 +8,7 @@ An end-to-end **ETL pipeline** that extracts job postings from the Arbeitnow Job
 
 This project implements a layered data architecture:
 
-```
+```diagram
 Arbeitnow Jobs API
     │
     │  (HTTP GET Request)
