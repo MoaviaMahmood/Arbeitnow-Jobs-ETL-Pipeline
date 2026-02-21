@@ -7,63 +7,21 @@ An end-to-end **ETL pipeline** that extracts job postings from the Arbeitnow Job
 ## Project Overview
 
 This project implements a layered data architecture:
+```mermaid
+graph LR
 
-```diagram
-Arbeitnow Jobs API
-    │
-    │  (HTTP GET Request)
-    │  - Pagination handling
-    │  - Error handling & status checks
-    │
-    ▼
-Bronze Layer – Raw Data (JSON)
-    │
-    │  File: data/bronze_jobs.json
-    │  - Raw API response
-    │  - No transformations
-    │  - Preserves original schema
-    │  - Stored for reproducibility & auditing
-    │
-    ▼
-Silver Layer – Cleaned Data (CSV)
-    │
-    │  File: data/silver_jobs.csv
-    │
-    │  Transformations:
-    │  - Slug parsing → extract job_id
-    │  - Title normalization
-    │  - Location splitting (city, region, country)
-    │  - Remote field normalization (0/1)
-    │  - HTML tag removal
-    │  - Encoding fixes (UTF-8 / Latin1 / CP1252)
-    │  - HTML entity decoding
-    │  - Remove Arbeitnow footer
-    │  - Timestamp parsing (UNIX → date)
-    │  - Whitespace normalization
-    │
-    ▼
-PostgreSQL – Analytics Ready Layer
-    │
-    │  Table: jobs_silver
-    │
-    │  Schema Features:
-    │  - job_id (Primary Key)
-    │  - description_length (Generated column)
-    │  - created_date (DATE)
-    │  - loaded_at (ETL timestamp)
-    │
-    │  Performance Optimization:
-    │  - B-tree indexes
-    │  - Partial index (recent jobs)
-    │  - Indexed remote flag
-    │
-    ▼
-Analytics & BI / SQL Queries
-    - Remote job analysis
-    - Hiring trend analysis
-    - Company job volume
-    - Time-based aggregations
+    A[Arbeitnow API] 
+        -->|Extract| B[Bronze Layer<br/>Immutable Raw Data]
 
+    B -->|Transform| C[Silver Layer<br/>Validated & Normalized]
+
+    C -->|Load| D[(PostgreSQL<br/>Indexed & Optimized)]
+
+    D -->|Query| E[Analytics / BI]
+
+    style B fill:#CD7F32,stroke:#333,stroke-width:2px,color:#fff
+    style C fill:#C0C0C0,stroke:#333,stroke-width:2px,color:#000
+    style D fill:#336791,stroke:#333,stroke-width:2px,color:#fff
 ```
 ## Dashboard Preview
 
